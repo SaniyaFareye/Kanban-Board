@@ -1,0 +1,93 @@
+<div ng-init="show='view'">
+    <div class="btn-group" role="group" >
+        <button ng-click="show='view'" type="button" class="btn btn-default">View Task</button>
+        <button ng-click="show='add'" type="button" class="btn btn-default">Add Task</button>
+    </div>
+
+
+    <div class="add process flow" ng-if="show=='add'">
+        <div class="bg-extended">
+            <div class="align-vertical-center">
+
+                <div class="container">
+
+                    <div class="row">
+                            <div class="well-heading well-primary">
+                                <h1>Add Task</h1>
+                            </div>
+                             <br>
+                            <br>
+                        <div  id="myModal" >
+                            <div >
+
+                                <!-- Modal content-->
+                                <div class="modal-content">
+
+                                    <div class="modal-body">
+                                        <div class="form-group label-floating">
+                                            <label class="control-label" for="crn_no">CRN NO(unique)</label>
+                                            <input id="crn_no" type="text" class="form-control" ng-model="task.crnNo" required="required"/>
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label" for="taskDescription">Task Description</label>
+                                            <input id="taskDescription" type="text" class="form-control" ng-model="task.taskDescription" required="required"/>
+                                        </div>
+                                        <div class="form-group label-floating">
+                                            <label class="control-label">Asignee</label>
+                                            <select name="u_role" class="form-control" ng-model="task.assignee" ng-options="x.username for x in asigneeList" >
+                                                <option value="">Select Asignee </option>
+                                            </select>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="addTask(task)">Save</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!--<div class="thumbnail" data-drop="true" data-jqyoui-options ng-model="list2" jqyoui-droppable style='height:400px;width: 250px;'>-->
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="add process flow" ng-if="show=='view'">
+        <div class="row">
+            <br/>
+            <div ng-repeat ="conf in configuration track by $index">
+                <div class="col-md-3">
+                    <h3>{{conf.code}}</h3>
+                    <div id="{{$index}}"class="thumbnail"  ondragover="allowDrop(event)"  ng-model="list2"  style='height:800px;width: 200px;'>
+                        <div ng-repeat ="task in taskList track by $index">
+                            <div ng-if="conf.code==task.currentStatus" >
+                                <div id="task{{$index}}" class="thumbnail" id="task" draggable="true" ondragstart="dragstart_handler(event,task.currentStatus);"style='height:100px;width: 180px;'>
+                                <ul>
+                                    <li>CRN No:{{task.crnNo}}</li>
+                                    <li>Task Des:{{task.taskDescription}}</li>
+                                    <li>Asignee:{{task.assignee.assigneeName}}</li>
+                                    <li>Status:{{task.currentStatus}}</li>
+                                </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+</div>
